@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from "react"
-import { GetSingleProduct } from "../Services"
+import { GetSingleProduct } from "../../Services"
 import { useDispatch, useSelector } from "react-redux"
-import { setItems } from "../redux/LoginSlice"
+import { setItems } from "../../redux/LoginSlice"
 import 'animate.css';
 import { useRouter } from "next/navigation"
 

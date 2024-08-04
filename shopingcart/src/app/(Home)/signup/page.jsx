@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef } from "react"
-import { handleLogOut, registerUser } from "../redux/LoginSlice"
+import { handleLogOut, registerUser } from "../../redux/LoginSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
  function SignUp(){

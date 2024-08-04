@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { setUser } from "../redux/LoginSlice";
+import { setUser } from "../../redux/LoginSlice";
 import { ClipLoader } from "react-spinners";
 
 function Profile(){

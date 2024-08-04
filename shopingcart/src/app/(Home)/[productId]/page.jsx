@@ -1,7 +1,7 @@
 'use client'
-import { GetSingleProduct } from "../Services"
+import { GetSingleProduct } from "../../Services"
 import { useEffect, useState } from "react"
-import { setItems } from "../redux/LoginSlice"
+import { setItems } from "../../redux/LoginSlice"
 import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2"
 function Product({params})
