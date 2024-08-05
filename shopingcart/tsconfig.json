@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/app/signup/page.jsx", "src/app/(Home)/contact/page.jsx"  ],
+, "src/app/signup/page.jsx", "src/app/(Home)/contact/page.jsx", "src/app/products/route.js"  ],
   "exclude": [
     "node_modules"
   ]
