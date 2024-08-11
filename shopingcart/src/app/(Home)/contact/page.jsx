@@ -59,7 +59,7 @@ function Contact(){
                 <div className="mt-4 mb-4 px-4 h-80 overflow-y-scroll " ref={outputRef} >
                     {messages.map((msg,index)=>
                         
-                        <div className="mx-4 bg-green-100 my-2 px-2 py-2 rounded-md" >
+                        <div key={index} className="mx-4 bg-green-100 my-2 px-2 py-2 rounded-md" >
                             <h1 className="text-lg font-bold ">{msg.data.uid==user.user.uid?'Me':msg.data.name}</h1>
                             <div className="text-xl overflow-x-auto">{msg.data.text}</div>
                             <div className="text-xs   text-right">{msg.data.timestamp?`${msg.data.timestamp.toDate().toDateString()} ${msg.data.timestamp.toDate().toLocaleTimeString()}`:''}</div>

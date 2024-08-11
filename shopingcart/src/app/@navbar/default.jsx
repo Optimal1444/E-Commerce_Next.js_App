@@ -1,9 +1,7 @@
 'use client'
-import Image from 'next/image';
-
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux'
 import {  handleLogOut } from "../redux/LoginSlice"
@@ -22,9 +20,10 @@ const navigation = [
   
 
 export default function DefaultNavBar() {
-    // const [signBtnActive,setSignBtnActive]=useState(1)
-    const user=useSelector(state=>state.login)
-    const [items,setItems]=useState(localStorage.getItem('items'))
+  
+    const state=useSelector(state=>state.login)
+    const [user,setUser]=useState({})
+    const [items,setItems]=useState(0)
     const dispatch=useDispatch()
   const handleClick=()=>{
     Swal.fire({
@@ -46,13 +45,16 @@ export default function DefaultNavBar() {
       }
     });
   }
-
+  useEffect(()=>{
+    setItems(localStorage.getItem('items'))
+    setUser(state)
+  },[state])
   
   return (
     <Disclosure as="nav" className="bg-gray-800 ">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 ">
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8  ">
             <div className="relative flex h-24 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -98,6 +100,7 @@ export default function DefaultNavBar() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3  flex md:gap-14 sm:gap-4 gap-2 items-center">
                 {user.user&&
+                <>
                 <Link   className='flex gap-1 ' href={('/cart')}>
                 <img
                     className=""
@@ -106,8 +109,7 @@ export default function DefaultNavBar() {
                   />
                   <span className="inline-flex  items-center rounded-3xl px-2 py-1 text-xs font-medium  text-orange-400 ring-2 ring-orange-400  ">{user.totalItemsInCart}</span>
                   </Link>
-                }
-                {user.user&&
+                
                   <Link    href={('/profile')}>
                       <img
                       className=""
@@ -115,9 +117,9 @@ export default function DefaultNavBar() {
                       alt="Company logcart to"
                       />
                     </Link>
-                }
-                  {user.user&&
+                
                     <button onClick={handleClick} className='bg-orange-400 p-2 rounded text-xl' >Sign out</button>
+                    </>
                   }
                 </Menu>
               </div>

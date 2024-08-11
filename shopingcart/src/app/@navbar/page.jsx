@@ -1,7 +1,7 @@
 'use client'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux'
 import {  handleLogOut } from "../redux/LoginSlice"
@@ -20,9 +20,10 @@ const navigation = [
   
 
 export default function NavBar() {
-    // const [signBtnActive,setSignBtnActive]=useState(1)
-    const user=useSelector(state=>state.login)
-    const [items,setItems]=useState(localStorage.getItem('items'))
+  
+    const state=useSelector(state=>state.login)
+    const [user,setUser]=useState({})
+    const [items,setItems]=useState(0)
     const dispatch=useDispatch()
   const handleClick=()=>{
     Swal.fire({
@@ -44,7 +45,10 @@ export default function NavBar() {
       }
     });
   }
-
+  useEffect(()=>{
+    setItems(localStorage.getItem('items'))
+    setUser(state)
+  },[state])
   
   return (
     <Disclosure as="nav" className="bg-gray-800 ">
@@ -96,6 +100,7 @@ export default function NavBar() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3  flex md:gap-14 sm:gap-4 gap-2 items-center">
                 {user.user&&
+                <>
                 <Link   className='flex gap-1 ' href={('/cart')}>
                 <img
                     className=""
@@ -104,8 +109,7 @@ export default function NavBar() {
                   />
                   <span className="inline-flex  items-center rounded-3xl px-2 py-1 text-xs font-medium  text-orange-400 ring-2 ring-orange-400  ">{user.totalItemsInCart}</span>
                   </Link>
-                }
-                {user.user&&
+                
                   <Link    href={('/profile')}>
                       <img
                       className=""
@@ -113,9 +117,9 @@ export default function NavBar() {
                       alt="Company logcart to"
                       />
                     </Link>
-                }
-                  {user.user&&
+                
                     <button onClick={handleClick} className='bg-orange-400 p-2 rounded text-xl' >Sign out</button>
+                    </>
                   }
                 </Menu>
               </div>

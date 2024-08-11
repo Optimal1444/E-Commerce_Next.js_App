@@ -114,7 +114,7 @@ function ShowCart()
                     alt="empty cart"
                   />
             <h1 className="text-3xl my-10">Your cart is empty</h1>
-            <button className="btn bg-black text-white mt-6  px-4 py-2 text-2xl rounded" onClick={()=>{navigate.push('/')}}>Let's go shoping!</button>
+            <button className="btn bg-black text-white mt-6  px-4 py-2 text-2xl rounded" onClick={()=>{navigate.push('/')}}>Let&apos;s go shoping!</button>
         </div>
        
     }
