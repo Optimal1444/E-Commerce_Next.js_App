@@ -28,7 +28,7 @@ function ShowCart()
         dispatch(setItems(total))
     }
      async function updateCart(){
-        const cart=localStorage.getItem(user.user.uid).split(',')
+        const cart=localStorage.getItem(user.user.uid)?localStorage.getItem(user.user.uid).split(','):[]
         const details=[]
         setProducts([])
         for(let i=0; i<cart.length;i++){

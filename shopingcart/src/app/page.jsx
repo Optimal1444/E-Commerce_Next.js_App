@@ -71,7 +71,7 @@ export default function Home() {
     }
     useEffect(()=>{
       
-    GetAllProducts().then((response)=>{ setProducts(response.data)})
+    GetAllProducts().then(response=>response.data).then(data=>{setProducts(data)})
     calculateItems()
     },[])
     const handleSearch=()=>{

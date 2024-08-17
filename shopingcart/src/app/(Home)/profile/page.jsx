@@ -38,7 +38,7 @@ function Profile(){
                                 ref={firstNameRef}
                                 id="firstName"
                                 className="shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                value={user.user.firstName} onChange={(e)=>{dispatch(setUser({...user.user,firstName:e.target.value}));handleSpinner(0)}} />
+                                value={user.user.first_name} onChange={(e)=>{dispatch(setUser({...user.user,first_name:e.target.value}));handleSpinner(0)}} />
                             <ClipLoader
                                         color={'#FB923C'}
                                         loading={loading[0]}
@@ -56,7 +56,7 @@ function Profile(){
                                 ref={lastNameRef}
                                 id="lastName"
                                 className="shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                value={user.user.lastName} onChange={(e)=>{dispatch(setUser({...user.user,lastName:e.target.value}));handleSpinner(1)}} />
+                                value={user.user.last_name} onChange={(e)=>{dispatch(setUser({...user.user,last_name:e.target.value}));handleSpinner(1)}} />
                             <ClipLoader
                                     color={'#FB923C'}
                                     loading={loading[1]}
@@ -75,7 +75,7 @@ function Profile(){
                                 ref={phoneRef}
                                 id="phone"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                value={user.user.phone} onChange={(e)=>{dispatch(setUser({...user.user,phone:e.target.value}));handleSpinner(2)}} />
+                                value={user.user.phone_number} onChange={(e)=>{dispatch(setUser({...user.user,phone_number:e.target.value}));handleSpinner(2)}} />
                             <ClipLoader
                                     color={'#FB923C'}
                                     loading={loading[2]}

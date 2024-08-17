@@ -11,11 +11,13 @@ import { useRouter } from "next/navigation"
   const navigate=useRouter()
   const {loading,error,user}=useSelector((state)=>state.login)
   const handleClick=()=>{
+      
       let cred={
-        'mail':mailRef.current.value,
-        'pass':passRef.current.value
+        'email':mailRef.current.value,
+        'password':passRef.current.value
       }
       dispatch(loginUser(cred))
+    
   }
   useEffect(()=>{
     console.log(user)

@@ -3,39 +3,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import { checkUser, createUser, updateUser } from "../Services";
 
-const initialize=()=>{
-    const firebaseConfig = {
-        apiKey: "AIzaSyACMgLax-P_T9-XI_ULzR-B6k1lHll9ZPE",
-        authDomain: "registration-8b460.firebaseapp.com",
-        projectId: "registration-8b460",
-        storageBucket: "registration-8b460.appspot.com",
-        messagingSenderId: "166647965144",
-        appId: "1:166647965144:web:09625519911cd0c2413ead"
-      };
-    const app = initializeApp(firebaseConfig);
-}
+
 export const registerUser=createAsyncThunk(
     'login/registerUser',
     async(cred)=>{
-        initialize()
-        const auth = getAuth();
-        const db=getFirestore()
         let response=null
-        await createUserWithEmailAndPassword(auth, cred.mail, cred.pass)
-        .then((userCredential) => {
-            const uid = userCredential.user.uid;
-            const userData=cred
-            userData.uid=uid
-            delete userData.pass
-            const docRef=doc(db,'users',uid)
-            setDoc(docRef,userData)
-            response=userData
+        await createUser(cred).then((res)=>{
+            response=res        
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            response = errorCode
+            response=error.response
         });
 
         return response
@@ -43,24 +22,18 @@ export const registerUser=createAsyncThunk(
 )
 export const loginUser=createAsyncThunk(
     'login/loginUser',
+   
     async(cred)=>{
-        initialize()
-        const auth = getAuth();
-        const db=getFirestore()
+        
+        
         let response=null
-        let uid=null
-        await signInWithEmailAndPassword(auth, cred.mail, cred.pass)
-        .then((userCredential) => {
-            uid = userCredential.user.uid;
-                     
-        })
+        await checkUser(cred).then((res)=>{
+            response=res
+        }
+        )
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            response= errorCode
+            response=error.response
         });
-        const docRef=doc(db,'users',uid)  
-        await getDoc(docRef).then(res=>res.data()).then(data=>{ response=data})
         return response
         
     }
@@ -86,10 +59,7 @@ const LoginSlice=createSlice({
         },
         setUser(state,action){
             state.user=action.payload
-            initialize()
-            const db=getFirestore()
-            const docRef=doc(db,'users',state.user.uid)
-            updateDoc(docRef,state.user)
+            updateUser(state.user)
         }
     },
     extraReducers:(builder)=>{
@@ -101,13 +71,13 @@ const LoginSlice=createSlice({
         })
         .addCase(registerUser.fulfilled,(state,action)=>{
             state.loading=false
-            if(typeof action.payload =='string'){
-            state.error=action.payload
+            if(action.payload.status!=200){
+            state.error=action.payload.data.error
             state.user=null
             }
             else{
                 state.error=null
-                state.user=action.payload
+                state.user=action.payload.data
             }
         })
         .addCase(loginUser.pending,(state)=>{
@@ -117,14 +87,13 @@ const LoginSlice=createSlice({
         })
         .addCase(loginUser.fulfilled,(state,action)=>{
             state.loading=false
-            if(typeof action.payload =='string'){
-            state.error=action.payload
-            state.user=null
+            state.error=null
+            if(action.payload.status!=200){
+                state.user=null
+                state.error=action.payload.data.error
             }
-            else{
-                state.error=null
-                state.user=action.payload
-            }
+            else
+                state.user=action.payload.data
         })
         .addCase(loginUser.rejected,(state,action)=>{
             state.loading=false

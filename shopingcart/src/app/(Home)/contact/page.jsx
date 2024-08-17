@@ -42,7 +42,7 @@ function Contact(){
     await addDoc(collection(db,"messages"),
     {
         uid:user.user.uid,
-        name:`${user.user.firstName} ${user.user.lastName}`,
+        name:`${user.user.first_name} ${user.user.last_name}`,
         text:inputRef.current.value,
         timestamp:serverTimestamp()
     }

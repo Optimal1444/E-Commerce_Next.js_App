@@ -16,11 +16,11 @@ import { useRouter } from "next/navigation"
     const handleClick=()=>{
       console.log(addressRef.current.value)
         let cred={
-          'mail':mailRef.current.value,
-          'pass':passRef.current.value,
+          'email':mailRef.current.value,
+          'password':passRef.current.value,
           'firstName':firstNameRef.current.value,
           'lastName':lastNameRef.current.value,
-          'phone':phoneRef.current.value,
+          'phoneNumber':phoneRef.current.value,
           'address':addressRef.current.value
         }
         dispatch(registerUser(cred))
