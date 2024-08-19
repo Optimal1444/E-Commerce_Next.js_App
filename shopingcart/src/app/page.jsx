@@ -9,7 +9,7 @@ import Swal from "sweetalert2"
 
 import { Suspense } from 'react';
 export default function Home() {
-  const [products,setProducts]=useState([])
+    const [products,setProducts]=useState([])
     const router=useRouter()
     const searchRef=useRef()
     const user=useSelector(state=>state.login)
@@ -94,7 +94,7 @@ export default function Home() {
             {   products.map((product,index)=>
 // 
                   <div key={index} className="animate__animated animate__fadeIn w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-center relative py-20 mx-auto"  >
-                    <img className="p-8 rounded-t-lg" src={product.image} alt="product image" onClick={()=>{handleProductClick(product.id)}} />            
+                    <img className="p-8 rounded-t-lg mx-auto" src={product.image} alt="product image" onClick={()=>{handleProductClick(product.id)}} />            
                      <div className="px-5 pb-5 ">
                  <h5 className="lg:text-xs md:text-lg text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{product.title}</h5>
                  <div className="flex justify-center items-center  mt-2.5 mb-5">
@@ -104,8 +104,16 @@ export default function Home() {
 
                  <div className="flex    items-center justify-center  absolute bottom-4 w-full gap-3">
                      <span className="text-xl font-bold text-gray-900 dark:text-white">${product.price}</span>
-                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={()=>{handleAddToCart(product.id)}}>Add to cart</button>
-                 </div>
+                     {user.user&&user.user.is_admin==0&&
+                        <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={()=>{handleAddToCart(product.id)}}>Add to cart</button>
+                     }
+                     {user.user&&user.user.is_admin!=0&&
+                        <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                        onClick={()=>{
+                            router.push(`addProduct?id=${product.id}`)
+                        }}>Update</button>
+                     }
+                    </div>
                  </div>
                 </div> 
                 
@@ -113,7 +121,14 @@ export default function Home() {
             )
 
             
-            }   
+            } 
+            {user.user&&user.user.is_admin!=0&&
+              
+              <div  className="animate__animated animate__fadeIn w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-center relative py-20 mx-auto flex items-center justify-center"  >
+                  <button className="text-gray-900 bg-white border border-gray-300 focus:outline-none  focus:ring-4 focus:ring-gray-100 font-medium rounded-3xl text-2xl px-10 py-10 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600   dark:focus:ring-gray-700" 
+                  onClick={()=>{router.push(`addProduct`)}}><img src="plus-solid.svg" alt='' /></button>
+              </div>
+            }
             </div>  
         {/* </Suspense> */}
                   

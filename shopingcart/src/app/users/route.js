@@ -22,7 +22,6 @@ export async function POST(request) {
         
                 delete user.PASSWORD;
                 delete user.id;
-                delete user.is_admin;
         
                 return NextResponse.json(user, { status: 200 });
         }

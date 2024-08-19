@@ -34,3 +34,18 @@ export async function updateUser(body)
     return await axiosInstance.put(`users/user`,body)
      
 }
+export async function addProduct(body)
+{
+    return await axiosInstance.post(`/products`,body)
+     
+}
+export async function updateProduct(body)
+{
+    return await axiosInstance.put(`/products`,body)
+     
+}
+export async function deleteProduct(id)
+{
+    return await axiosInstance.delete(`/products/${id}`)
+     
+}
